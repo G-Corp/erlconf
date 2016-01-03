@@ -46,11 +46,17 @@ open(Name, File) ->
   open(Name, File, []).
 open(Name, File, Options) when is_atom(Name) ->
   Conf = #conf{ file = File },
-  case file:consult(File) of
-    {ok, Data} -> 
-      gen_server:start({local, Name}, ?MODULE, [Conf#conf{data = Data}, Options], []);
-    E -> E 
+  case filelib:is_regular(File) of
+    true ->
+      case file:consult(File) of
+        {ok, Data} -> 
+          gen_server:start({local, Name}, ?MODULE, [Conf#conf{data = Data}, Options], []);
+        E -> E 
+      end;
+    false ->
+      gen_server:start({local, Name}, ?MODULE, [Conf#conf{data = []}, Options], [])
   end.
+
 
 close({ok, PID}) -> close(PID);
 close(Name) when is_atom(Name) ->

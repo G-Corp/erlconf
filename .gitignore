@@ -8,4 +8,4 @@ erl_crash.dump
 log
 .erlang.mk
 *.d
-
+.tests
