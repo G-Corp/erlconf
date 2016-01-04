@@ -3,7 +3,7 @@
   {description, "A simple library to manipulate Erlang config files"},
   {vsn, "1.0.0"},
   {registered, []},
-  {modules, []}.
+  {modules, []},
   {applications, [
                   kernel,
                   stdlib
